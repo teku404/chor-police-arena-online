@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="description" content="Chor Police Online — Play the classic Raja Mantri Chor Police game with friends in real-time multiplayer!" />
+  <meta name="theme-color" content="#0a0a0f" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>Chor Police Online</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+</head>
+<body>
+  <!-- ==================== APP CONTAINER ==================== -->
+  <div id="app">
+
+    <!-- Background Effects -->
+    <div id="bg-effects">
+      <div class="siren siren-left"></div>
+      <div class="siren siren-right"></div>
+      <div class="city-skyline"></div>
+      <div class="grid-overlay"></div>
+    </div>
+
+    <!-- ==================== MAIN MENU ==================== -->
+    <section id="screen-menu" class="screen active">
+      <div class="screen-content">
+        <!-- Top Stats Bar -->
+        <div class="stats-bar glass-card">
+          <div class="stat-item">
+            <span class="stat-icon">👤</span>
+            <span class="stat-value" id="menu-player-name">Player</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-icon">🪙</span>
+            <span class="stat-value" id="menu-coins">0</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-icon">⭐</span>
+            <span class="stat-value" id="menu-level">Lv.1</span>
+          </div>
+        </div>
+
+        <!-- Logo -->
+        <div class="logo-container">
+          <h1 class="game-logo">
+            <span class="logo-chor">CHOR</span>
+            <span class="logo-police">POLICE</span>
+            <span class="logo-online">ONLINE</span>
+          </h1>
+          <p class="logo-tagline">Raja • Mantri • Chor • Police</p>
+        </div>
+
+        <!-- Menu Buttons -->
+        <div class="menu-buttons">
+          <button id="btn-play-online" class="btn btn-primary btn-large" onclick="Screens.menu.playOnline()">
+            <span class="btn-icon">▶</span>
+            <span class="btn-text">Play Online</span>
+          </button>
+          <button id="btn-create-room" class="btn btn-accent btn-large" onclick="Screens.menu.createRoom()">
+            <span class="btn-icon">👥</span>
+            <span class="btn-text">Create Room</span>
+          </button>
+          <button id="btn-join-room" class="btn btn-accent btn-large" onclick="Screens.menu.joinRoom()">
+            <span class="btn-icon">🔑</span>
+            <span class="btn-text">Join Room</span>
+          </button>
+          <div class="menu-row">
+            <button id="btn-leaderboard" class="btn btn-ghost" onclick="Screens.menu.leaderboard()">
+              <span class="btn-icon">🏆</span>
+              <span class="btn-text">Leaderboard</span>
+            </button>
+            <button id="btn-profile" class="btn btn-ghost" onclick="Screens.menu.profile()">
+              <span class="btn-icon">👤</span>
+              <span class="btn-text">Profile</span>
+            </button>
+            <button id="btn-settings" class="btn btn-ghost" onclick="Screens.menu.settings()">
+              <span class="btn-icon">⚙️</span>
+              <span class="btn-text">Settings</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Name Input Modal (shown first time) -->
+        <div id="name-modal" class="modal-overlay active">
+          <div class="modal glass-card">
+            <h2 class="modal-title">Welcome, Detective!</h2>
+            <p class="modal-desc">Enter your name to begin</p>
+            <input type="text" id="input-player-name" class="input-field" placeholder="Your Name..." maxlength="15" autocomplete="off" />
+            <button id="btn-save-name" class="btn btn-primary" onclick="Screens.menu.saveName()">
+              <span class="btn-text">Let's Go!</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== CREATE ROOM ==================== -->
+    <section id="screen-create" class="screen">
+      <div class="screen-content">
+        <button class="btn-back" onclick="App.showScreen('menu')">← Back</button>
+        <h2 class="screen-title">Create Room</h2>
+
+        <div class="create-options glass-card">
+          <label class="option-label">Number of Rounds</label>
+          <div class="round-selector">
+            <button class="round-btn active" data-rounds="10" onclick="Screens.lobby.selectRounds(this)">10</button>
+            <button class="round-btn" data-rounds="15" onclick="Screens.lobby.selectRounds(this)">15</button>
+            <button class="round-btn" data-rounds="20" onclick="Screens.lobby.selectRounds(this)">20</button>
+          </div>
+
+          <button id="btn-create-go" class="btn btn-primary btn-large" onclick="Screens.lobby.createRoom()">
+            <span class="btn-icon">🚀</span>
+            <span class="btn-text">Create Room</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== JOIN ROOM ==================== -->
+    <section id="screen-join" class="screen">
+      <div class="screen-content">
+        <button class="btn-back" onclick="App.showScreen('menu')">← Back</button>
+        <h2 class="screen-title">Join Room</h2>
+
+        <div class="join-form glass-card">
+          <label class="option-label">Room Code</label>
+          <input type="text" id="input-room-code" class="input-field input-code" placeholder="ABCD12" maxlength="6" autocomplete="off" style="text-transform: uppercase; letter-spacing: 0.3em; text-align: center; font-size: 1.5rem;" />
+          <button id="btn-join-go" class="btn btn-primary btn-large" onclick="Screens.lobby.joinRoom()">
+            <span class="btn-icon">🔑</span>
+            <span class="btn-text">Join</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== MATCHMAKING ==================== -->
+    <section id="screen-matchmaking" class="screen">
+      <div class="screen-content center-content">
+        <div class="matchmaking-spinner">
+          <div class="spinner-ring"></div>
+          <div class="spinner-ring delay-1"></div>
+          <div class="spinner-ring delay-2"></div>
+        </div>
+        <h2 class="screen-title">Finding Match...</h2>
+        <p class="matchmaking-status" id="matchmaking-status-text">Searching for players...</p>
+        <button id="btn-cancel-match" class="btn btn-ghost" onclick="Screens.lobby.cancelMatchmaking()">Cancel</button>
+      </div>
+    </section>
+
+    <!-- ==================== LOBBY ==================== -->
+    <section id="screen-lobby" class="screen">
+      <div class="screen-content">
+        <button class="btn-back" onclick="Screens.lobby.leaveRoom()">← Leave</button>
+
+        <div class="lobby-header">
+          <h2 class="screen-title">Game Lobby</h2>
+          <div class="room-code-display glass-card">
+            <span class="room-code-label">Room Code</span>
+            <span class="room-code-value" id="lobby-room-code">------</span>
+            <button class="btn-copy" onclick="Screens.lobby.copyCode()" title="Copy Code">📋</button>
+          </div>
+        </div>
+
+        <div class="lobby-info">
+          <span class="lobby-rounds" id="lobby-rounds">10 Rounds</span>
+        </div>
+
+        <!-- Player Slots -->
+        <div class="player-slots" id="player-slots">
+          <div class="player-slot glass-card empty">
+            <div class="slot-number">1</div>
+            <div class="slot-info">
+              <span class="slot-name">Waiting...</span>
+            </div>
+          </div>
+          <div class="player-slot glass-card empty">
+            <div class="slot-number">2</div>
+            <div class="slot-info">
+              <span class="slot-name">Waiting...</span>
+            </div>
+          </div>
+          <div class="player-slot glass-card empty">
+            <div class="slot-number">3</div>
+            <div class="slot-info">
+              <span class="slot-name">Waiting...</span>
+            </div>
+          </div>
+          <div class="player-slot glass-card empty">
+            <div class="slot-number">4</div>
+            <div class="slot-info">
+              <span class="slot-name">Waiting...</span>
+            </div>
+          </div>
+        </div>
+
+        <button id="btn-ready" class="btn btn-primary btn-large btn-ready" onclick="Screens.lobby.toggleReady()">
+          <span class="btn-text">Ready!</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ==================== GAME SCREEN ==================== -->
+    <section id="screen-game" class="screen">
+      <div class="screen-content game-layout">
+        <!-- Game Header -->
+        <div class="game-header">
+          <div class="round-info">
+            <span id="game-round">Round 1</span>
+            <span id="game-round-total">/ 10</span>
+          </div>
+          <div class="game-timer glass-card" id="game-timer">
+            <span class="timer-value" id="timer-value">25</span>
+            <span class="timer-label">sec</span>
+          </div>
+          <div class="game-phase" id="game-phase-label">Waiting...</div>
+        </div>
+
+        <!-- Role Badges Bar (all roles visible) -->
+        <div class="role-badges-bar" id="role-badges-bar" style="display:none;">
+          <!-- Dynamically filled -->
+        </div>
+
+        <!-- Role Card -->
+        <div class="role-card-container" id="role-card-container" style="display:none;">
+          <div class="role-card" id="role-card">
+            <div class="role-card-inner">
+              <div class="role-card-front">
+                <span class="role-card-question">❓</span>
+              </div>
+              <div class="role-card-back" id="role-card-back">
+                <span class="role-emoji" id="role-emoji">👑</span>
+                <span class="role-name" id="role-name">Raja</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Player Cards (for Mantri guess) -->
+        <div class="player-cards" id="player-cards" style="display:none;">
+          <!-- Dynamically filled -->
+        </div>
+
+        <!-- Chat Area -->
+        <div class="chat-area glass-card" id="chat-area" style="display:none;">
+          <div class="chat-messages" id="chat-messages">
+            <!-- Messages appear here -->
+          </div>
+          <div class="chat-input-row">
+            <input type="text" id="chat-input" class="input-field chat-input-field" placeholder="Type a message..." maxlength="200" autocomplete="off" />
+            <button class="btn btn-accent btn-send" onclick="Screens.game.sendChat()">➤</button>
+          </div>
+        </div>
+
+        <!-- Mini Scoreboard -->
+        <div class="mini-scoreboard glass-card" id="mini-scoreboard">
+          <!-- Dynamically filled -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== ROUND RESULT ==================== -->
+    <section id="screen-round-result" class="screen">
+      <div class="screen-content center-content">
+        <h2 class="screen-title" id="result-title">Round Result</h2>
+        <div class="result-verdict glass-card" id="result-verdict">
+          <!-- Correct / Wrong -->
+        </div>
+        <div class="result-roles" id="result-roles">
+          <!-- All roles revealed -->
+        </div>
+        <div class="result-scores glass-card" id="result-scores">
+          <!-- Score updates -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== FINAL RESULTS ==================== -->
+    <section id="screen-results" class="screen">
+      <div class="screen-content center-content">
+        <canvas id="confetti-canvas"></canvas>
+        <h2 class="screen-title results-title">🏆 Final Results</h2>
+        <div class="final-leaderboard" id="final-leaderboard">
+          <!-- Dynamically filled -->
+        </div>
+        <div class="results-buttons">
+          <button id="btn-play-again" class="btn btn-primary btn-large" onclick="Screens.results.playAgain()">
+            <span class="btn-icon">🔄</span>
+            <span class="btn-text">Play Again</span>
+          </button>
+          <button id="btn-back-menu" class="btn btn-ghost" onclick="Screens.results.backToMenu()">
+            <span class="btn-text">Main Menu</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SETTINGS ==================== -->
+    <section id="screen-settings" class="screen">
+      <div class="screen-content">
+        <button class="btn-back" onclick="App.showScreen('menu')">← Back</button>
+        <h2 class="screen-title">Settings</h2>
+
+        <div class="settings-group glass-card">
+          <div class="setting-item">
+            <label>Sound Effects</label>
+            <input type="range" id="setting-sfx" min="0" max="100" value="80" class="slider" oninput="Screens.settings.updateSfx(this.value)" />
+          </div>
+          <div class="setting-item">
+            <label>Music</label>
+            <input type="range" id="setting-music" min="0" max="100" value="50" class="slider" oninput="Screens.settings.updateMusic(this.value)" />
+          </div>
+          <div class="setting-item">
+            <label>Change Name</label>
+            <div class="setting-row">
+              <input type="text" id="setting-name" class="input-field" placeholder="New name..." maxlength="15" />
+              <button class="btn btn-accent" onclick="Screens.settings.changeName()">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TOAST CONTAINER ==================== -->
+    <div id="toast-container"></div>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/animations.js"></script>
+  <script src="js/network.js"></script>
+  <script src="js/screens/menu.js"></script>
+  <script src="js/screens/lobby.js"></script>
+  <script src="js/screens/game.js"></script>
+  <script src="js/screens/results.js"></script>
+  <script src="js/screens/settings.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,225 @@
+/* ============================================================
+   Chor Police Online — Animations
+   Lightweight, GPU-accelerated, 60 FPS
+   ============================================================ */
+
+/* ---- Siren Pulse ---- */
+@keyframes sirenPulse {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+
+/* ---- Spinner ---- */
+@keyframes spinnerRotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ---- Modal Pop ---- */
+@keyframes modalPop {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ---- Card Pulse (front of role card) ---- */
+@keyframes cardPulse {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.1); opacity: 1; }
+}
+
+/* ---- Timer Pulse ---- */
+@keyframes timerPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+/* ---- Toast In/Out ---- */
+@keyframes toastIn {
+  0% { transform: translateY(-20px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes toastOut {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-20px); opacity: 0; }
+}
+
+/* ---- Chat message fade ---- */
+@keyframes chatFadeIn {
+  0% { transform: translateY(10px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+/* ---- Result Card Pop ---- */
+@keyframes resultCardPop {
+  0% { transform: scale(0.5) rotateY(90deg); opacity: 0; }
+  60% { transform: scale(1.05) rotateY(0deg); opacity: 1; }
+  100% { transform: scale(1) rotateY(0deg); opacity: 1; }
+}
+
+/* ---- Leaderboard Slide In ---- */
+@keyframes leaderboardSlideIn {
+  0% { transform: translateX(-40px); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+
+/* ---- Screen Transitions ---- */
+@keyframes screenFadeIn {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes screenFadeOut {
+  0% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-20px); }
+}
+
+.screen.entering {
+  animation: screenFadeIn 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.screen.exiting {
+  animation: screenFadeOut 0.3s ease forwards;
+}
+
+/* ---- Score Pop ---- */
+@keyframes scorePop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.3); color: var(--accent-gold); }
+  100% { transform: scale(1); }
+}
+
+.score-pop {
+  animation: scorePop 0.5s ease;
+}
+
+/* ---- Winner Glow ---- */
+@keyframes winnerGlow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(245, 158, 11, 0.2), 0 0 40px rgba(245, 158, 11, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(245, 158, 11, 0.4), 0 0 80px rgba(245, 158, 11, 0.2);
+  }
+}
+
+.winner-glow {
+  animation: winnerGlow 2s ease-in-out infinite;
+}
+
+/* ---- Countdown Number ---- */
+@keyframes countdownPop {
+  0% { transform: scale(0); opacity: 0; }
+  50% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(0.9); opacity: 0; }
+}
+
+.countdown-number {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Outfit', sans-serif;
+  font-size: 8rem;
+  font-weight: 900;
+  color: var(--accent-blue);
+  text-shadow: 0 0 60px rgba(59, 130, 246, 0.5);
+  z-index: 50;
+  pointer-events: none;
+  animation: countdownPop 1s ease forwards;
+}
+
+/* ---- Role Reveal Flash ---- */
+@keyframes roleRevealFlash {
+  0% { opacity: 0; }
+  50% { opacity: 0.3; }
+  100% { opacity: 0; }
+}
+
+.role-reveal-flash {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 40;
+  pointer-events: none;
+  animation: roleRevealFlash 0.6s ease;
+}
+
+.role-reveal-flash.raja { background: var(--color-raja); }
+.role-reveal-flash.mantri { background: var(--color-mantri); }
+.role-reveal-flash.chor { background: var(--color-chor); }
+.role-reveal-flash.police { background: var(--color-police); }
+
+/* ---- Button Ripple on Mobile ---- */
+@keyframes ripple {
+  0% { width: 0; height: 0; opacity: 0.3; }
+  100% { width: 300px; height: 300px; opacity: 0; }
+}
+
+/* ---- Guess Card Shake (wrong guess) ---- */
+@keyframes shakeCard {
+  0%, 100% { transform: translateX(0); }
+  10%, 50%, 90% { transform: translateX(-4px); }
+  30%, 70% { transform: translateX(4px); }
+}
+
+.shake {
+  animation: shakeCard 0.5s ease;
+}
+
+/* ---- Loading Dots ---- */
+@keyframes loadingDots {
+  0%, 20% { content: '.'; }
+  40% { content: '..'; }
+  60%, 100% { content: '...'; }
+}
+
+/* ---- Pulse Ring (around winner) ---- */
+@keyframes pulseRing {
+  0% {
+    transform: scale(0.8);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.4);
+    opacity: 0;
+  }
+}
+
+.pulse-ring {
+  position: absolute;
+  border: 2px solid var(--accent-gold);
+  border-radius: 50%;
+  animation: pulseRing 1.5s ease-out infinite;
+}
+
+/* ---- Floating Particles (background ambience) ---- */
+@keyframes floatUp {
+  0% {
+    transform: translateY(100vh) scale(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.5;
+  }
+  90% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(-10vh) scale(1);
+    opacity: 0;
+  }
+}
+
+.particle {
+  position: fixed;
+  width: 2px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: floatUp linear infinite;
+  z-index: 0;
+}
